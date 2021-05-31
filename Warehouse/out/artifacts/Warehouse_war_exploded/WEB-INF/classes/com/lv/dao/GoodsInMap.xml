@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lv.dao.GoodsInMap">
+    <resultMap id="StackInOrderResultMap" type="stackInOrder">
+        <result column="IGIId" property="goodsInId"/>
+        <result column="IGId" property="goodsId"/>
+        <result column="GName" property="goodsName"/>
+        <result column="GType" property="goodsType"/>
+        <result column="PName" property="providerName"/>
+        <result column="IV" property="StackInOrderValue"/>
+        <result column="INum" property="StackInOrderNum"/>
+        <result column="GPaper" property="goodsPaper"/>
+        <result column="ID" property="StackInOrderTime"/>
+    </resultMap>
+    <select id="selectAllStackInOrder" resultMap="StackInOrderResultMap">
+        select
+        I.GOOD_IN_ID IGIID,
+        I.GOOD_ID IGId,
+        G.GOOD_NAME GName,
+        G.GOOD_TYPE GType,
+        P.PROVIDER_NAME PName,
+        I.GOOD_VALUE IV,
+        I.GOOD_NUM INum,
+        G.GOOD_PAPER GPaper,
+        I.GOOD_DATE ID
+        from
+        MyWarehouse.Goods_In as I,
+        MyWarehouse.Goods as G,
+        MyWarehouse.Provider as P
+        where I.GOOD_ID = G.GOOD_ID and I.PROVIDER_ID = P.PROVIDER_ID;
+    </select>
+    <select id="selectStackInOrderByGoodInId" parameterType="String" resultMap="StackInOrderResultMap">
+        select
+        I.GOOD_IN_ID IGIID,
+        I.GOOD_ID IGId,
+        G.GOOD_NAME GName,
+        G.GOOD_TYPE GType,
+        P.PROVIDER_NAME PName,
+        I.GOOD_VALUE IV,
+        I.GOOD_NUM INum,
+        G.GOOD_PAPER GPaper,
+        I.GOOD_DATE ID
+        from
+        MyWarehouse.Goods_In as I,
+        MyWarehouse.Goods as G,
+        MyWarehouse.Provider as p
+        where I.GOOD_IN_ID = #{id} and I.GOOD_ID = G.GOOD_ID and I.PROVIDER_ID = P.PROVIDER_ID;
+    </select>
+    <select id="selectStackInOrderByGoodId" parameterType="String" resultMap="StackInOrderResultMap">
+        select
+        I.GOOD_IN_ID IGIID,
+        I.GOOD_ID IGId,
+        G.GOOD_NAME GName,
+        G.GOOD_TYPE GType,
+        P.PROVIDER_NAME PName,
+        I.GOOD_VALUE IV,
+        I.GOOD_NUM INum,
+        G.GOOD_PAPER GPaper,
+        I.GOOD_DATE ID
+        from
+        MyWarehouse.Goods_In as I,
+        MyWarehouse.Goods as G,
+        MyWarehouse.Provider as p
+        where I.GOOD_ID = #{id} and I.GOOD_ID = G.GOOD_ID and I.PROVIDER_ID = P.PROVIDER_ID;
+    </select>
+    <select id="selectStackInOrderByProviderId" parameterType="String" resultMap="StackInOrderResultMap">
+        select
+        I.GOOD_IN_ID IGIID,
+        I.GOOD_ID IGId,
+        G.GOOD_NAME GName,
+        G.GOOD_TYPE GType,
+        P.PROVIDER_NAME PName,
+        I.GOOD_VALUE IV,
+        I.GOOD_NUM INum,
+        G.GOOD_PAPER GPaper,
+        I.GOOD_DATE ID
+        from
+        MyWarehouse.Goods_In as I,
+        MyWarehouse.Goods as G,
+        MyWarehouse.Provider as p
+        where I.PROVIDER_ID = #{id} and I.GOOD_ID = G.GOOD_ID and I.PROVIDER_ID = P.PROVIDER_ID;
+    </select>
+    
+    <insert id="insertGoodsIn" parameterType="stackInOrder">
+        insert into MyWarehouse.Goods_In
+        values(#{goodsInId},#{goodsId},#{providerId},#{StackInOrderTime},#{StackInOrderValue},#{StackInOrderNum});
+    </insert>
+    
+    <delete id="deleteStackInOrderByGoodInId" parameterType="String">
+        delete from MyWarehouse.Goods_In
+        where GOOD_IN_ID = #{id};
+    </delete>
+</mapper>

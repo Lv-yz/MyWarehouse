@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lv.dao.CustomerMap">
+    <resultMap id="customerResultMap" type="customer">
+        <result column="CUSTOMER_ID" property="customerId"/>
+        <result column="CUSTOMER_NAME" property="customerName"/>
+        <result column="CUSTOMER_TEL" property="customerTel"/>
+        <result column="CUSTOMER_ADDRESS" property="customerAddress"/>
+    </resultMap>
+    <select id="selectAllCustomer" resultMap="customerResultMap">
+        select * from MyWarehouse.Customer;
+    </select>
+    <select id="selectCustomerById" parameterType="String" resultMap="customerResultMap">
+        select * from MyWarehouse.Customer where CUSTOMER_ID = #{id};
+    </select>
+    <select id="selectCustomerByName" parameterType="String" resultMap="customerResultMap">
+        select * from MyWarehouse.Customer where CUSTOMER_NAME = #{name};
+    </select>
+    <delete id="deleteCustomerById">
+        delete from MyWarehouse.Customer where CUSTOMER_ID = #{id};
+
+    </delete>
+    <update id="updateCustomer">
+        update MyWarehouse.Customer
+        set
+        CUSTOMER_NAME = #{customerName} , CUSTOMER_TEL = #{customerTel} , CUSTOMER_ADDRESS = #{customerAddress}
+        where CUSTOMER_ID = #{customerId};
+
+    </update>
+    <insert id="insertCustomer" parameterType="customer">
+        insert into MyWarehouse.Customer
+        values(#{customerId},#{customerName},#{customerTel},#{customerAddress})
+
+    </insert>
+</mapper>

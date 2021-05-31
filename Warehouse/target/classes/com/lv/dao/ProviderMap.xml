@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lv.dao.ProviderMap">
+    <resultMap id="providerResultMap" type="provider">
+        <result column="PROVIDER_ID" property="providerId"/>
+        <result column="PROVIDER_NAME" property="providerName"/>
+        <result column="PROVIDER_ADDRESS" property="providerAddress"/>
+        <result column="PROVIDER_TEL" property="providerTel"/>
+    </resultMap>
+    <select id="selectAllProvider" resultMap="providerResultMap">
+        select * from MyWarehouse.Provider;
+    </select>
+    <select id="selectProviderById" parameterType="String" resultMap="providerResultMap">
+        select * from MyWarehouse.Provider where PROVIDER_ID = #{id};
+    </select>
+    <select id="selectProviderByName" parameterType="String" resultMap="providerResultMap">
+        select * from MyWarehouse.Provider where PROVIDER_NAME = #{name};
+    </select>
+    <delete id="deleteProviderById" parameterType="String">
+        delete from MyWarehouse.Provider where PROVIDER_ID = #{id};
+    </delete>
+    <update id="updateProvider" parameterType="provider">
+        update MyWarehouse.Provider
+        set
+        PROVIDER_NAME = #{providerName} , PROVIDER_ADDRESS = #{providerAddress} , PROVIDER_TEL = #{providerTel}
+        where PROVIDER_ID = #{providerId};
+    </update>
+    <insert id="insertProvider" parameterType="provider">
+        insert into MyWarehouse.Provider
+        values
+        (#{providerId},#{providerName},#{providerAddress},#{providerTel});
+    </insert>
+</mapper>

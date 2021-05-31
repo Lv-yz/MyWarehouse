@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lv.dao.GoodsOutMap">
+    <resultMap id="OutboundOrderResultMap" type="outboundOrder">
+        <result column="OGOId" property="goodsOutId"/>
+        <result column="OGId" property="goodsId"/>
+        <result column="GName" property="goodsName"/>
+        <result column="GType" property="goodsType"/>
+        <result column="CName" property="customerName"/>
+        <result column="OV" property="OutboundOrderValue"/>
+        <result column="ONum" property="OutboundOrderNum"/>
+        <result column="GPaper" property="goodsPaper"/>
+        <result column="OD" property="OutboundOrderTime"/>
+    </resultMap>
+    <select id="selectAllOutboundOrder" resultMap="OutboundOrderResultMap">
+        select
+        O.GOOD_OUT_ID OGOId,
+        O.GOOD_ID OGId,
+        G.GOOD_NAME GName,
+        G.GOOD_TYPE GType,
+        C.CUSTOMER_NAME CName,
+        O.GOOD_VALUE OV,
+        O.GOOD_NUM ONum,
+        G.GOOD_PAPER GPaper,
+        O.GOOD_DATE OD
+        from
+        MyWarehouse.Goods_Out as O,MyWarehouse.Goods as G,MyWarehouse.Customer as C
+        where
+        O.GOOD_ID = G.GOOD_ID and O.CUSTOMER_ID = C.CUSTOMER_ID;
+    </select>
+    <select id="selectOutboundOrderByGoodOutId" resultMap="OutboundOrderResultMap">
+        select
+        O.GOOD_OUT_ID OGOId,
+        O.GOOD_ID OGId,
+        G.GOOD_NAME GName,
+        G.GOOD_TYPE,
+        C.CUSTOMER_NAME CName,
+        O.GOOD_VALUE OV,
+        O.GOOD_NUM ONum,
+        G.GOOD_PAPER GPaper,
+        O.GOOD_DATE OD
+        from
+        MyWarehouse.Goods_Out as O,MyWarehouse.Goods as G,MyWarehouse.Customer as C
+        where
+        O.GOOD_OUT_ID = #{id} and O.GOOD_ID = G.GOOD_ID and O.CUSTOMER_ID = C.CUSTOMER_ID;
+    </select>
+
+    <select id="selectOutboundOrderByGoodId" parameterType="String" resultMap="OutboundOrderResultMap">
+        select
+        O.GOOD_OUT_ID OGOId,
+        O.GOOD_ID OGId,
+        G.GOOD_NAME GName,
+        G.GOOD_TYPE,
+        C.CUSTOMER_NAME CName,
+        O.GOOD_VALUE OV,
+        O.GOOD_NUM ONum,
+        G.GOOD_PAPER GPaper,
+        O.GOOD_DATE OD
+        from
+        MyWarehouse.Goods_Out as O,MyWarehouse.Goods as G,MyWarehouse.Customer as C
+        where
+        G.GOOD_ID = #{id} and O.GOOD_ID = G.GOOD_ID and O.CUSTOMER_ID = C.CUSTOMER_ID;
+    </select>
+    <select id="selectOutboundOrderByCustomerId" parameterType="String" resultMap="OutboundOrderResultMap">
+        select
+        O.GOOD_OUT_ID OGOId,
+        O.GOOD_ID OGId,
+        G.GOOD_NAME GName,
+        G.GOOD_TYPE,
+        C.CUSTOMER_NAME CName,
+        O.GOOD_VALUE OV,
+        O.GOOD_NUM ONum,
+        G.GOOD_PAPER GPaper,
+        O.GOOD_DATE OD
+        from
+        MyWarehouse.Goods_Out as O,MyWarehouse.Goods as G,MyWarehouse.Customer as C
+        where
+        C.CUSTOMER_ID = #{id} and O.GOOD_ID = G.GOOD_ID and O.CUSTOMER_ID = C.CUSTOMER_ID;
+    </select>
+    <insert id="insertGoodsOut" parameterType="outboundOrder">
+        insert into MyWarehouse.Goods_Out
+        values
+        (#{goodsOutId},#{goodsId},#{customerId},#{OutboundOrderTime},#{OutboundOrderValue},#{OutboundOrderNum});
+    </insert>
+
+    <delete id="deleteGoodsOutByGoodOutId" parameterType="String">
+        delete from MyWarehouse.Goods_Out
+        where GOOD_OUT_ID = #{id};
+    </delete>
+</mapper>

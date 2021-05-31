@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lv.dao.GoodsMap">
+    <resultMap id="goodsResultMap" type="goods">
+        <result column="GOOD_ID" property="goodsId"/>
+        <result column="GOOD_NAME" property="goodsName"/>
+        <result column="GOOD_TYPE" property="goodsType"/>
+        <result column="GOOD_VALUE" property="goodsValue"/>
+        <result column="GOOD_PAPER" property="goodsPaper"/>
+    </resultMap>
+    <select id="selectAllGoods" resultMap="goodsResultMap">
+        select * from MyWarehouse.Goods;
+    </select>
+    <select id="selectGoodsById" parameterType="String" resultMap="goodsResultMap">
+        select * from MyWarehouse.Goods where GOOD_ID = #{id};
+    </select>
+    <select id="selectGoodsByName" parameterType="String" resultMap="goodsResultMap">
+        select * from MyWarehouse.Goods where GOOD_NAME = #{name};
+    </select>
+    <delete id="deleteGoodsById">
+        delete from MyWarehouse.Goods where GOOD_ID = #{id};
+    </delete>
+    <update id="updateGoods" parameterType="goods">
+        update MyWarehouse.Goods
+        set
+        GOOD_NAME = #{goodsName} , GOOD_TYPE = #{goodsType} , GOOD_VALUE = #{goodsValue} ,GOOD_PAPER = #{goodsPaper}
+        where
+        GOOD_ID = #{goodsId};
+    </update>
+    <insert id="insertGoods" parameterType="goods">
+        insert into MyWarehouse.Goods
+        values
+        (#{goodsId},#{goodsName},#{goodsType},#{goodsValue},#{goodsPaper});
+    </insert>
+</mapper>

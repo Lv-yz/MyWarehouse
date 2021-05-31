@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lv.dao.ManagerMap">
+    <resultMap id="managerResultMap" type="manager">
+        <result column="MANAGER_ID" property="managerId"/>
+        <result column="MANAGER_NAME" property="managerName"/>
+        <result column="PASSWORD" property="password"/>
+    </resultMap>
+    <select id="selectManagerById" resultMap="managerResultMap">
+        select * from MyWarehouse.Manager where MANAGER_ID = #{MANAGER_ID};
+    </select>
+    <select id="selectManager" parameterType="manager" resultMap="managerResultMap">
+        select * from MyWarehouse.Manager where  MANAGER_ID = #{managerId} and PASSWORD = #{password};
+    </select>
+    <update id="updateManager" parameterType="String">
+        update MyWarehouse.Manager set PASSWORD = #{newPassword} where PASSWORD = #{oldPassword} and MANAGER_ID = #{id};
+    </update>
+    <select id="selectAllManager" resultMap="managerResultMap">
+        select * from MyWarehouse.manager;
+    </select>
+
+</mapper>
